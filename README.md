@@ -29,7 +29,7 @@ after executing above, you will see a console log. Choose what platform you want
 
 ## Screenshots
 ![Alt text](https://github.com/yllongboy/docufyapp/blob/main/screenshots/Screenshot%202023-06-08%20at%2010.47.10%20PM.png?raw=true "Home Screen")
-![Alt text](screenshots/Screenshot 2023-06-08 at 10.47.56 PM.png?raw=true "Detail Screen")
-![Alt text](screenshots/Screenshot 2023-06-08 at 10.48.09 PM.png?raw=true "Upload Screen")
+![Alt text]([screenshots/Screenshot 2023-06-08 at 10.47.56 PM.png?raw=true](https://github.com/yllongboy/docufyapp/blob/main/screenshots/Screenshot%202023-06-08%20at%2010.47.56%20PM.png?raw=true) "Detail Screen")
+![Alt text](/screenshots/Screenshot%202023-06-08%20at%2010.47.56%20PM.png?raw=true "Upload Screen")
 
 
