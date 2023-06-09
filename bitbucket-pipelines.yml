@@ -1,0 +1,53 @@
+# This is a sample build configuration for Other.
+# Check our guides at https://confluence.atlassian.com/x/5Q4SMw for more examples.
+# Only use spaces to indent your .yml configuration.
+# -----
+# You can specify a custom docker image from Docker Hub as your build environment.
+image: node:14.21.2
+
+options:
+  docker: true
+
+
+definitions:
+  steps:
+    - step: &build-image
+        name: Build Docker image
+        image: node:14.21.2
+        script:
+          - docker build -t docufy-app -f Dockerfile .
+          - docker save --output tmp-image.docker docufy-app
+        artifacts:
+          - tmp-image.docker
+    - step: &push-gcp
+        name: Push to GCP registry
+        image: google/cloud-sdk:alpine
+        script:
+          - docker load --input ./tmp-image.docker
+          # Authenticating with the service account key file
+          - echo $GCLOUD_API_KEYFILE | base64 -d > ./gcloud-api-key.json
+          #- echo $GCLOUD_API_KEYFILE > /tmp/gcloud-api-key.json
+          - gcloud auth activate-service-account --key-file gcloud-api-key.json
+          - gcloud config set project $GCLOUD_PROJECT
+          # Tag container & push
+          - export TAG=$(echo "$BITBUCKET_TAG" | sed -e "s/v//g")
+          - export SUFFIX=$([[ ! -z "$TAG" ]] && echo ":$TAG" || echo "")
+          - export IMAGE_NAME=gcr.io/docufy-374817/docufy-app${SUFFIX}
+          - docker tag docufy-app ${IMAGE_NAME}
+          # Login to google docker hub
+          - cat ./gcloud-api-key.json | docker login -u _json_key --password-stdin https://gcr.io
+          - docker push ${IMAGE_NAME}
+  services:
+    docker:
+      memory: 3072          
+
+pipelines:
+  tags:
+    v*:
+      - step: *build-image
+      - step: *push-gcp
+
+  branches:
+    master:
+      - step: *build-image
+      - step: *push-gcp
