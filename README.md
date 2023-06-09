@@ -27,4 +27,9 @@ after executing above, you will see a console log. Choose what platform you want
 
 › Press ? │ show all commands
 
+## Screenshots
+![Alt text](screenshots/Screenshot 2023-06-08 at 10.47.10 PM.png?raw=true "Home Screen")
+![Alt text](screenshots/Screenshot 2023-06-08 at 10.47.56 PM.png?raw=true "Detail Screen")
+![Alt text](screenshots/Screenshot 2023-06-08 at 10.48.09 PM.png?raw=true "Upload Screen")
+
 
